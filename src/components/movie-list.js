@@ -28,11 +28,25 @@ class MovieList extends Component {
     })
   }
 
+  hanndleIntersection = (entries) => {
+    const { isIntersecting } = entries[0]
+    if (isIntersecting) {
+      this.getPage(this.state.page)
+      this.setState({
+        page: this.state.page + 1
+      })
+    }
+
+  }
+
   componentDidMount() {
-    this.getPage(this.state.page)
+    //this.getPage(this.state.page)
     store.suscribe(() => {
       this.setState()
     })
+
+    const observer = new IntersectionObserver( this.hanndleIntersection )
+    observer.observe(window.intersector)
   }
 
   render() {
