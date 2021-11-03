@@ -2,8 +2,8 @@ import { Component } from "../lib/react/index.js"
 import styled from "../lib/styled-components.js"
 import WrapperStyled from "./wrapper.js"
 import Movie from "./movie.js"
-import movies from '../movies.js'
-   
+import {store} from '../redux/store/index.js'   
+
 const MovieListStyled = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fit, 200px);
@@ -13,11 +13,15 @@ const MovieListStyled = styled.section`
 `
 
 class MovieList extends Component {
-  render() {
 
+  render() {
+    const state = store.getState()
+    const movieListIds = state.list[state.filter]
+    const movieList = state.movieList
+    
     return WrapperStyled({
         children: MovieListStyled({
-            children: movies.map( movie => new Movie(movie))
+            children: movieListIds.map(id => new Movie(movieList.get(id)))
         },)
     })
   }
