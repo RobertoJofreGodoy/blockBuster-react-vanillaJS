@@ -2,7 +2,9 @@ import { Component } from "../lib/react/index.js"
 import styled from "../lib/styled-components.js"
 import WrapperStyled from "./wrapper.js"
 import Movie from "./movie.js"
-import {store} from '../redux/store/index.js'   
+import {store} from '../redux/store/index.js'
+import api from "./api.js"
+import { ADD_MOVIES } from '../redux/actions/index.js'
 
 const MovieListStyled = styled.section`
   display: grid;
@@ -13,6 +15,25 @@ const MovieListStyled = styled.section`
 `
 
 class MovieList extends Component {
+
+  state = {
+    page: 1,
+  }
+
+  getPage = async (page) => {
+    const { results } = await api.moviePage(page)
+    store.dispatch({
+      type: ADD_MOVIES,
+      payload: results
+    })
+  }
+
+  componentDidMount() {
+    this.getPage(this.state.page)
+    store.suscribe(() => {
+      this.setState()
+    })
+  }
 
   render() {
     const state = store.getState()
