@@ -10,7 +10,10 @@ const elements = [
   'article',
   'footer',
   'header',
-  'button'
+  'form',
+  'input',
+  'button',
+  'select',
 ]
 
 function buildStyles(strings, dynamicValues, props) {
