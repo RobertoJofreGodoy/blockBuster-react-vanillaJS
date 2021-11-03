@@ -1,4 +1,3 @@
-import { initialState } from "../store/index.js"
 import { ADD_MOVIES, SET_FILTER } from "../actions/index.js"
 import { movieListMap, getAllIds, getMostValuedIds, getLeastValuedIds } from '../../normalize.js'
 
@@ -22,7 +21,10 @@ export default function reducer(state, { type, payload }) {
       }
     }
     case SET_FILTER:
-      return state
+      return { 
+        ...state,
+        filter: payload
+      }
     default:
       return state
   }
